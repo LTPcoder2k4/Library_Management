@@ -9,6 +9,7 @@ struct Date{
     void create();
     bool isValid();
     void aWeekAfter();
+    const char* toString();
     int operator - (const Date);
     void operator = (const Date);
 };

@@ -24,6 +24,10 @@ void Book::create(){
     s_input("Book's price: ", this->price, 17);
 }
 
+void Book::display(){
+    printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", this->id, this->isbn, this->name, this->author, this->publisher, this->category, this->price);
+}
+
 //An ID is valid when it is not appear in the stock
 //It will return true if there is no matching id
 //Otherwise, it will return false if the id occur in list of book
@@ -35,7 +39,7 @@ bool Stock::isValidID(char id[]){
     return true;
 }
 
-void Stock::addBook(){
+void Stock::add(){
     system("CLS");
 
     //Create new book in last position
@@ -65,4 +69,18 @@ void Stock::addBook(){
 
     //Increase number of books when add new successfully
     this->bookQuantity++;
+}
+
+void Stock::display(){
+    system("CLS");
+
+    //Print title of table
+	printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", "ID", "ISBN", "Name", "Author", "Publisher", "Publish Date", "Category", "Price");
+
+    //For loop to print each book in stock
+    for (int index = 0; index < this->bookQuantity; index++){
+        this->books[index].display();
+    }
+
+	printf("\n");
 }

@@ -92,6 +92,24 @@ void Date::aWeekAfter(){
     }
 }
 
+const char* Date::toString(){
+    char date[11] = {
+        day / 10 + '0', 
+        day % 10 + '0', 
+        '/', 
+        month / 10 + '0',
+        month % 10 + '0',
+        '/',
+        year / 1000 + '0',
+        year / 100 / 10 + '0',
+        year / 10 / 100 + '0',
+        year % 10 + '0',
+        '\0'
+    };
+
+    return date;
+}
+
 //Subtraction operator overload to calculate date time different between couple days
 int Date::operator - (const Date date){
     //Declare result date variable

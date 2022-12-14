@@ -18,6 +18,7 @@ struct Book{
 
     void operator = (const Book);
     void create();
+    void display();
 };
 
 struct Stock{
@@ -25,7 +26,8 @@ struct Stock{
     Book books[100];
 
     bool isValidID(char[]);
-    void addBook();
+    void add();
+    void display();
 };
 
 #endif
