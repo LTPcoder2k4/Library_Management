@@ -19,12 +19,12 @@ int main(){
     while (ev != 27)
 	{
 		system("CLS");
-        printf("{\\____/}\n");
-        printf("( * . *)\n");
+        printf("{\\__/}\n");
+        printf("( *.*)\n");
 
         //Change mode of console to U16TEXT in order to print ❤️
         int oldMode = _setmode(_fileno(stdout), 0x00020000);
-        wprintf(L"/ >  ❤️ \n");
+        wprintf(L"/ > ❤️ \n");
         //Change it back to O_TEXT to print normal ascii character
         _setmode(_fileno(stdout), oldMode);
 
