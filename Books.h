@@ -24,7 +24,7 @@ struct Book{
 struct Stock{
     int bookQuantity = 0;
     Book books[100];
-    const char* fileName = "Stock.json"
+    const char* fileName = "Stock.json";
 
     void push();
     void pull();

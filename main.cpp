@@ -39,7 +39,7 @@ int main(){
 
 		switch (ev){
             case '1':
-                stock.addBook();
+                stock.add();
                 printf("%d", stock.bookQuantity);
                 break;
             case '2':

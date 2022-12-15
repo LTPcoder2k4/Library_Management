@@ -25,7 +25,7 @@ void Book::create(){
 }
 
 void Book::display(){
-    printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", this->id, this->isbn, this->name, this->author, this->publisher, this->category, this->price);
+    printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", this->id, this->isbn, this->name, this->author, this->publisher, this->publishDate.toString(), this->category, this->price);
 }
 
 int Stock::findID(char id[]){
