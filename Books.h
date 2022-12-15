@@ -24,10 +24,15 @@ struct Book{
 struct Stock{
     int bookQuantity = 0;
     Book books[100];
+    const char* fileName = "Stock.json"
 
-    bool isValidID(char[]);
+    void push();
+    void pull();
+    int findID(char[]);
+    int findName(char[]);
     void add();
     void display();
+    void remove(int);
 };
 
 #endif

@@ -28,15 +28,20 @@ void Book::display(){
     printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", this->id, this->isbn, this->name, this->author, this->publisher, this->category, this->price);
 }
 
-//An ID is valid when it is not appear in the stock
-//It will return true if there is no matching id
-//Otherwise, it will return false if the id occur in list of book
-bool Stock::isValidID(char id[]){
+int Stock::findID(char id[]){
     for (int index = 0; index < this->bookQuantity; index++){
-        if (isEqual(this->books[index].id, id)) return false;
+        if (isEqual(this->books[index].id, id)) return index;
     }
 
-    return true;
+    return -1;
+}
+
+int Stock::findName(char name[]){
+    for (int index = 0; index < this->bookQuantity; index++){
+        if (isEqual(this->books[index].name, name)) return index;
+    }
+
+    return -1;
 }
 
 void Stock::add(){
@@ -57,7 +62,7 @@ void Stock::add(){
         idGeneration(position, id);
 
         //Check if the id is unique key
-        if (this->isValidID(id)){
+        if (this->findID(id) != -1){
             //Assign end of string to last id character
             id[6] = '\0';
 
@@ -83,4 +88,13 @@ void Stock::display(){
     }
 
 	printf("\n");
+}
+
+//Idea: Remove a book out of stock by pushing it to the end and decrease book's quantity
+void Stock::remove(int position){
+    this->bookQuantity--;
+
+    for (int index = position; index < this->bookQuantity; index++){
+        this->books[index] = this->books[index + 1];
+    }
 }
