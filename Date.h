@@ -1,8 +1,6 @@
 #ifndef DATE_H
 #define DATE_H
 
-#include <string>
-
 struct Date{
     int day, month, year;
 
@@ -11,7 +9,7 @@ struct Date{
     void create();
     bool isValid();
     void aWeekAfter();
-    std::string toString();
+    const char* toString();
     int operator - (const Date);
     void operator = (const Date);
 };

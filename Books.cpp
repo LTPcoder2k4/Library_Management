@@ -25,7 +25,23 @@ void Book::create(){
 }
 
 void Book::display(){
-    printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", this->id, this->isbn, this->name, this->author, this->publisher, this->publishDate.toString(), this->category, this->price);
+    printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", 
+    this->id, this->isbn, this->name, this->author, 
+    this->publisher, this->publishDate.toString(), this->category, this->price);
+}
+
+void Stock::push(){
+    FILE *f = fopen("books.csv", "wb");
+    if (f != NULL){
+        for (int i = 0; i < this->bookQuantity; i++){
+            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,%s\n", 
+                this->books[i].id, this->books[i].isbn, this->books[i].name, this->books[i].author, 
+                this->books[i].publisher, this->books[i].publishDate.toString(), this->books[i].category, this->books[i].price
+            );
+        }
+        
+    }
+    fclose(f);
 }
 
 int Stock::findID(char id[]){
@@ -62,7 +78,7 @@ void Stock::add(){
         idGeneration(position, id);
 
         //Check if the id is unique key
-        if (this->findID(id) != -1){
+        if (this->findID(id) == -1){
             //Assign end of string to last id character
             id[6] = '\0';
 

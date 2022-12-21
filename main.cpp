@@ -40,7 +40,7 @@ int main(){
 		switch (ev){
             case '1':
                 stock.add();
-                printf("%d", stock.bookQuantity);
+                stock.push();
                 break;
             case '2':
                 

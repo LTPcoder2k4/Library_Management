@@ -92,21 +92,19 @@ void Date::aWeekAfter(){
     }
 }
 
-std::string Date::toString(){
-    std::string date;
-    
-    date += this->day / 10 + '0'; 
-    date += this->day % 10 + '0'; 
-    date += '/'; 
-    date += this->month / 10 + '0';
-    date += this->month % 10 + '0';
-    date += '/';
-    date += this->year / 1000 + '0';
-    date += this->year / 100 / 10 + '0';
-    date += this->year / 10 / 100 + '0';
-    date += this->year % 10 + '0';
-    date += '\0';
-
+const char* Date::toString(){
+    static char date[11];
+    date[0] = this->day / 10 + '0';
+    date[1] = this->day % 10 + '0';
+    date[2] = '/';
+    date[3] = this->month / 10 + '0';
+    date[4] = this->month % 10 + '0';
+    date[5] = '/';
+    date[6] = this->year / 1000 + '0';
+    date[7] = this->year / 100 / 10 + '0';
+    date[8] = this->year / 10 / 100 + '0';
+    date[9] = this->year % 10 + '0';
+    date[10] = '\0';
     return date;
 }
 
