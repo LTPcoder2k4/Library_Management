@@ -39,8 +39,9 @@ int main(){
 
 		switch (ev){
             case '1':
-                stock.add();
-                stock.push();
+                stock.load();
+                stock.display();
+                stock.save();
                 break;
             case '2':
                 

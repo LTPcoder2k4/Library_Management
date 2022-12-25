@@ -30,17 +30,38 @@ void Book::display(){
     this->publisher, this->publishDate.toString(), this->category, this->price);
 }
 
-void Stock::push(){
+void Stock::load(){
+    FILE *f = fopen("books.csv", "rb");
+    int i = 0;
+    if (f){
+        while (!feof(f)){
+            fscanf(f, "%[^,],%[^,],%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],\n",
+                this->books[i].id, this->books[i].isbn, this->books[i].name, this->books[i].author, 
+                this->books[i].publisher, &this->books[i].publishDate.day, 
+                &this->books[i].publishDate.month, &this->books[i].publishDate.year, 
+                this->books[i].category, this->books[i].price
+            );
+            i++;
+        }
+        this->bookQuantity = i;
+        printf("Load stock from file successful!\n");
+        fclose(f);
+    }else{
+        printf("File \"books.csv\" not found!\n");
+    }
+}
+
+void Stock::save(){
     FILE *f = fopen("books.csv", "wb");
     if (f != NULL){
         for (int i = 0; i < this->bookQuantity; i++){
-            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,%s\n", 
+            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,%s,\n", 
                 this->books[i].id, this->books[i].isbn, this->books[i].name, this->books[i].author, 
                 this->books[i].publisher, this->books[i].publishDate.toString(), this->books[i].category, this->books[i].price
             );
         }
-        
     }
+    printf("Save stock to file successful!\n");
     fclose(f);
 }
 

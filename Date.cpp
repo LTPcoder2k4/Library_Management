@@ -65,8 +65,9 @@ int Date::getAmountDaysOfMonth(int month, int year){
     }
 }
 
+//The valid date is where the day, month meet the criteria 0 < month, day and day < amount day in that month, month < 12
 bool Date::isValid(){
-    if (this->day > this->getAmountDaysOfMonth(this->month, this->year)) return false;
+    if (this->day > this->getAmountDaysOfMonth(this->month, this->year) || this->month > 12 || this->month <= 0 || this->day <= 0) return false;
     return true;
 }
 
@@ -92,6 +93,7 @@ void Date::aWeekAfter(){
     }
 }
 
+//Return the date in char* with the format DD/MM/YYYY
 const char* Date::toString(){
     static char date[11];
     date[0] = this->day / 10 + '0';

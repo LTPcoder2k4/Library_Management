@@ -26,8 +26,8 @@ struct Stock{
     Book books[100];
     const char* fileName = "Stock.json";
 
-    void push();
-    void pull();
+    void save();
+    void load();
     int findID(char[]);
     int findName(char[]);
     void add();
