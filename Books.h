@@ -4,8 +4,7 @@
 #include "Date.h"
 
 struct Book{
-    char id[7],
-        isbn[14],
+    char isbn[14],
         name[17],
         author[17],
         publisher[17],

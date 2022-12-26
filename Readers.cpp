@@ -6,12 +6,12 @@
 #include <windows.h>
 
 void Reader::operator=(const Reader reader){
-    memcpy(this->id, reader.id, strlen(reader.id));
-    memcpy(this->name, reader.name, strlen(reader.name));
-    memcpy(this->identityCard, reader.identityCard, strlen(reader.identityCard));
-    memcpy(this->sex, reader.sex, strlen(reader.sex));
-    memcpy(this->email, reader.email, strlen(reader.email));
-    memcpy(this->address, reader.address, strlen(reader.address));
+    memcpy(this->id, reader.id, strlen(reader.id) + 1);
+    memcpy(this->name, reader.name, strlen(reader.name) + 1);
+    memcpy(this->identityCard, reader.identityCard, strlen(reader.identityCard) + 1);
+    memcpy(this->sex, reader.sex, strlen(reader.sex) + 1);
+    memcpy(this->email, reader.email, strlen(reader.email) + 1);
+    memcpy(this->address, reader.address, strlen(reader.address) + 1);
     this->birthday = reader.birthday;
     this->dateCreated = reader.dateCreated;
     this->dateExpired = reader.dateExpired;
@@ -21,21 +21,35 @@ void Reader::operator=(const Reader reader){
 void Reader::create(){
     s_input("Reader's name: ", name, 16);
 	s_input("Reader's ID card: ", identityCard, 12);
-	printf("Reader's birthday: "); this->birthday.create();
+	printf("Reader's birthday: \n"); this->birthday.create();
 	s_input("Reader's sex(male or female): ", sex, 6);
 	s_input("Reader's email: ", email, 30);
 	s_input("Reader's address: ", address, 30);
-	printf("Reader's creating date: "); this->dateCreated.create();
+	printf("Reader's creating date: \n"); this->dateCreated.create();
     this->dateExpired = this->dateCreated;
     this->dateExpired.year += 4;
 }
 
 void Reader::display(){
-    printf("%7s|%17s|%13s|%11s|%7s|%31s|%31s|%11s|%11s|\n",
-        this->id, this->name, this->identityCard, this->birthday.toString(),
-        this->sex, this->email, this->address, this->dateCreated.toString(), 
-        this->dateExpired.toString()
-    );
+    printf("%7s|", this->id);
+
+	printf("%17s|", this->name);
+
+	printf("%13s|", this->identityCard);
+
+	printf("%11s|", this->birthday.toString());
+
+	printf("%7s|", this->sex);
+
+	printf("%31s|", this->email);
+
+	printf("%31s|", this->address);
+
+	printf("%11s|", this->dateCreated.toString());
+
+	printf("%11s|", this->dateExpired.toString());
+
+	printf("\n");
 }
 
 void Reader::edit(){
@@ -102,12 +116,27 @@ void Reader::edit(){
 void ListReader::save(){
     FILE* f = fopen(this->fileName, "wb");
     if (f != NULL){
+        fprintf(f, "%d\n", this->readerQuantity);
         for (int index = 0; index < this->readerQuantity; index++){
-            fprintf(f, "%7s,%17s,%13s,%11s,%7s,%31s,%31s,%11s,%11s,\n",
-                this->readers[index].id, this->readers[index].name, this->readers[index].identityCard, this->readers[index].birthday.toString(),
-                this->readers[index].sex, this->readers[index].email, this->readers[index].address, this->readers[index].dateCreated.toString(), 
-                this->readers[index].dateExpired.toString()
-            );
+            fprintf(f, "%s,", this->readers[index].id);
+
+            fprintf(f, "%s,", this->readers[index].name);
+
+            fprintf(f, "%s,", this->readers[index].identityCard);
+
+            fprintf(f, "%s,", this->readers[index].birthday.toString());
+
+            fprintf(f, "%s,", this->readers[index].sex);
+
+            fprintf(f, "%s,", this->readers[index].email);
+
+            fprintf(f, "%s,", this->readers[index].address);
+
+            fprintf(f, "%s,", this->readers[index].dateCreated.toString());
+
+            fprintf(f, "%s,", this->readers[index].dateExpired.toString());
+
+            fprintf(f, "\n");
         }
     }else{
         printf("Cannot create file \"%s\"!\n", this->fileName);
@@ -118,19 +147,17 @@ void ListReader::save(){
 
 void ListReader::load(){
     FILE *f = fopen(this->fileName, "rb");
-    int index = 0;
     if (f != NULL){
-        while (!feof(f)){
+        fscanf(f, "%d\n", &this->readerQuantity);
+        for (int index = 0; index < this->readerQuantity; index++){
             fscanf(f, "%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],%[^,],%d/%d/%d,%d/%d/%d,\n",
                 this->readers[index].id, this->readers[index].name, this->readers[index].identityCard, 
                 &this->readers[index].birthday.day, &this->readers[index].birthday.month, &this->readers[index].birthday.year,
                 this->readers[index].sex, this->readers[index].email, this->readers[index].address, 
                 &this->readers[index].dateCreated.day, &this->readers[index].dateCreated.month, &this->readers[index].dateCreated.year,
-                &this->readers[index].dateExpired.day, &this->readers[index].dateCreated.month, &this->readers[index].dateCreated.year
+                &this->readers[index].dateExpired.day, &this->readers[index].dateExpired.month, &this->readers[index].dateExpired.year
             );
-            index++;
         }
-        this->readerQuantity = index;
         printf("Load list of readers from file successful!\n");
         fclose(f);
     }else{
@@ -197,8 +224,8 @@ void ListReader::display(){
     system("CLS");
 
     //Print title of table
-	printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", "ID", "ISBN", "Name", "Author", "Publisher", "Publish Date", "Category", "Price");
-
+	printf("%7s|%17s|%13s|%11s|%7s|%31s|%31s|%11s|%11s|\n", 
+    "ID", "Name", "ID card", "Birthday", "Sex", "Email", "Address", "Created", "Expired");
     //For loop to print each book in stock
     for (int index = 0; index < this->readerQuantity; index++){
         this->readers[index].display();

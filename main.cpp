@@ -78,6 +78,7 @@ void booksPage(Stock &s){
                     printf("There is no book with the ISBN: %s!\n", isbn);
                 }else{
                     s.books[index].edit();
+                    s.save();
                 }
                 break;
             case '4':
@@ -102,8 +103,8 @@ void booksPage(Stock &s){
                     printf("There is no book with the ISBN: %s!\n", isbn);
                 }else{
                     s.books[index].display();
-                    system("PAUSE");
                 }
+                system("PAUSE");
                 break;
             case '6':
                 system("CLS");
@@ -114,8 +115,8 @@ void booksPage(Stock &s){
                     printf("There is no book with the name: %s!\n", name);
                 }else{
                     s.books[index].display();
-                    system("PAUSE");
                 }
+                system("PAUSE");
                 break;
             default:
                 break;
@@ -162,6 +163,7 @@ void readersPage(ListReader &r){
                     printf("There is no reader with the ID: %s!\n", id);
                 }else{
                     r.readers[index].edit();
+                    r.save();
                 }
                 break;
             case '4':
@@ -186,8 +188,8 @@ void readersPage(ListReader &r){
                     printf("There is no reader with the ID: %s!\n", id);
                 }else{
                     r.readers[index].display();
-                    system("PAUSE");
                 }
+                system("PAUSE");
                 break;
             case '6':
                 system("CLS");
@@ -198,8 +200,8 @@ void readersPage(ListReader &r){
                     printf("There is no reader with the name: %s!\n", name);
                 }else{
                     r.readers[index].display();
-                    system("PAUSE");
                 }
+                system("PAUSE");
                 break;
             default:
                 break;
@@ -262,7 +264,7 @@ void classifyCategory(Stock s){
                 total++;
             }
         }
-        printf("- %s: %d", category[i], total);
+        printf("- %s: %d\n", category[i], total);
     }
 }
 

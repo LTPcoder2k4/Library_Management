@@ -6,19 +6,19 @@
 #include <cstring>
 
 void Book::operator = (const Book book){
-    memcpy(this->id, (char *) book.id, strlen(book.id));
-    memcpy(this->name, (char *) book.name, strlen(book.name));
-    memcpy(this->author, (char *) book.author, strlen(book.author));
-    memcpy(this->publisher, (char *) book.publisher, strlen(book.publisher));
-    memcpy(this->category, (char *) book.category, strlen(book.category));
-    memcpy(this->price, (char *) book.price, strlen(book.price));
+    memcpy(this->isbn, (char *) book.isbn, strlen(book.isbn) + 1);
+    memcpy(this->name, (char *) book.name, strlen(book.name) + 1);
+    memcpy(this->author, (char *) book.author, strlen(book.author) + 1);
+    memcpy(this->publisher, (char *) book.publisher, strlen(book.publisher) + 1);
+    memcpy(this->category, (char *) book.category, strlen(book.category) + 1);
+    memcpy(this->price, (char *) book.price, strlen(book.price) + 1);
     this->publishDate = book.publishDate;
     this->isBorrow = book.isBorrow;
 }
 
 void Book::create(){
+    s_input("Book's ISBN: ", this->isbn, 13);
     s_input("Book's name: ", this->name, 16);
-    s_input("Book's ISBN: ", this->isbn, 14);
     s_input("Book's author: ", this->author, 16);
     s_input("Book's publisher: ", this->publisher, 16);
     printf("Book's publish date:\n"); this->publishDate.create();
@@ -27,8 +27,8 @@ void Book::create(){
 }
 
 void Book::display(){
-    printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", 
-    this->id, this->isbn, this->name, this->author, 
+    printf("%14s|%17s|%17s|%17s|%11s|%17s|%17s|\n", 
+    this->isbn, this->name, this->author, 
     this->publisher, this->publishDate.toString(), this->category, this->price);
 }
 
@@ -95,18 +95,16 @@ void Book::edit(){
 
 void Stock::load(){
     FILE *f = fopen(this->fileName, "rb");
-    int i = 0;
     if (f != NULL){
-        while (!feof(f)){
-            fscanf(f, "%[^,],%[^,],%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],\n",
-                this->books[i].id, this->books[i].isbn, this->books[i].name, this->books[i].author, 
+        fscanf(f, "%d\n", &this->bookQuantity);
+        for (int i = 0; i < this->bookQuantity; i++){
+            fscanf(f, "%[^,],%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],\n",
+                this->books[i].isbn, this->books[i].name, this->books[i].author, 
                 this->books[i].publisher, &this->books[i].publishDate.day, 
                 &this->books[i].publishDate.month, &this->books[i].publishDate.year, 
                 this->books[i].category, this->books[i].price
             );
-            i++;
         }
-        this->bookQuantity = i;
         printf("Load stock from file successful!\n");
         fclose(f);
     }else{
@@ -118,13 +116,14 @@ void Stock::load(){
 void Stock::save(){
     FILE *f = fopen(this->fileName, "wb");
     if (f != NULL){
+        fprintf(f, "%d\n", this->bookQuantity);
         for (int i = 0; i < this->bookQuantity; i++){
-            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,%s,\n", 
-                this->books[i].id, this->books[i].isbn, this->books[i].name, this->books[i].author, 
-                this->books[i].publisher, this->books[i].publishDate.toString(), this->books[i].category, this->books[i].price
+            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,\n", 
+                this->books[i].isbn, this->books[i].name, this->books[i].author, 
+                this->books[i].publisher, this->books[i].publishDate.toString(), 
+                this->books[i].category, this->books[i].price
             );
         }
-        printf("Save stock to file successful!\n");
         fclose(f);
     }else{
         printf("Cannot create file \"%s\"!\n", this->fileName);
@@ -152,30 +151,14 @@ void Stock::add(){
     system("CLS");
 
     //Create new book in last position
-    this->books[this->bookQuantity].create();
-
-    //Generally, we can generate id base on its position in stock
-    //However, when a book, which is not at last, is deleted
-    //The position have some problem when the book after move to previous
-    //The loop is make to find the empty position for this situation
-    for (int position = this->bookQuantity; position >= 0; position--){
-        //Create temporary id
-        char id[7] = {'B', '-'};
-
-        //Generate id base on its position in stock
-        idGeneration(position, id);
-
-        //Check if the id is unique key
-        if (this->findID(id) == -1){
-            //Assign end of string to last id character
-            id[6] = '\0';
-
-            //Copy temporary id to book's id
-            memcpy( this->books[this->bookQuantity].id, id, strlen(id));
-            break;
-        }
+    Book temp;
+    temp.create();
+    //Check if isbn is unique
+    if (this->findID(temp.isbn) != -1){
+        printf("ISBN %s is already exist!\n", temp.isbn);
     }
 
+    this->books[this->bookQuantity] = temp;
     //Increase number of books when add new successfully
     this->bookQuantity++;
 
@@ -189,7 +172,7 @@ void Stock::display(){
     system("CLS");
 
     //Print title of table
-	printf("%7s|%14s|%17s|%17s|%11s|%11s|%17s|%17s|\n", "ID", "ISBN", "Name", "Author", "Publisher", "Publish Date", "Category", "Price");
+	printf("%14s|%17s|%17s|%17s|%11s|%17s|%17s|\n", "ISBN", "Name", "Author", "Publisher", "Publish Day", "Category", "Price");
 
     //For loop to print each book in stock
     for (int index = 0; index < this->bookQuantity; index++){

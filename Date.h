@@ -4,8 +4,7 @@
 struct Date{
     int day, month, year;
 
-    static int getAmountDaysOfMonth(int, int);
-
+    int getAmountDaysOfMonth(int, int);
     void create();
     bool isValid();
     void aWeekAfter();

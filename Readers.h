@@ -5,7 +5,9 @@
 
 struct Reader{
     char id[7], name[17], identityCard[13], sex[7], email[31], address[31];
-    Date birthday, dateCreated, dateExpired;
+    Date birthday;
+    Date dateCreated;
+    Date dateExpired;
     bool isLateReturning = false;
 
     void operator = (const Reader);

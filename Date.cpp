@@ -3,13 +3,13 @@
 #include <stdio.h>
 
 void Date::create(){
-    char temp[4];
+    char day[3], month[3], year[5];
 
     //Input day and check if user type not number character
     inputDay:
     try{
-        s_input("Input day: ", temp, 2);
-        this->day = parseInt(temp);
+        s_input("Input day: ", day, 2);
+        this->day = parseInt(day);
     }catch(int error){
         if (error == 500){
             printf("Day must be a number with format dd!\n");
@@ -20,8 +20,8 @@ void Date::create(){
     //Input month and check if user type not number character
     inputMonth:
     try{
-        s_input("Input month: ", temp, 2);
-        this->month = parseInt(temp);
+        s_input("Input month: ", month, 2);
+        this->month = parseInt(month);
     }catch(int error){
         if (error == 500){
             printf("Month must be a number with format mm!\n");
@@ -32,8 +32,8 @@ void Date::create(){
     //Input year and check if user type not number character
     inputYear:
     try{
-        s_input("Input year: ", temp, 4);
-        this->year = parseInt(temp);
+        s_input("Input year: ", year, 4);
+        this->year = parseInt(year);
     }catch(int error){
         if (error == 500){
             printf("Year must be a number with format yyyy!\n");
@@ -106,8 +106,8 @@ const char* Date::toString(){
     date[4] = this->month % 10 + '0';
     date[5] = '/';
     date[6] = this->year / 1000 + '0';
-    date[7] = this->year / 100 / 10 + '0';
-    date[8] = this->year / 10 / 100 + '0';
+    date[7] = this->year / 100 % 10 + '0';
+    date[8] = this->year / 10 % 10 + '0';
     date[9] = this->year % 10 + '0';
     date[10] = '\0';
     return date;

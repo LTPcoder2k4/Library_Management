@@ -3,10 +3,12 @@
 #include "Handle.h"
 #include <stdio.h>
 #include <cstring>
+#include <stdlib.h>
 
 void ListCard::save(){
     FILE* f = fopen(this->fileName, "wb");
     if (f != NULL){
+        fprintf(f, "%d\n", this->cardQuantity);
         for (int i = 0; i < this->cardQuantity; i++){
         fprintf(f, "%s,%s,%s,\n",
             this->cards[i].borrowDate.toString(),
@@ -23,9 +25,9 @@ void ListCard::save(){
 
 void ListCard::load(){
     FILE* f = fopen(this->fileName, "rb");
-    int index = 0;
     if (f != NULL){
-        while (!feof(f)){
+        fscanf(f, "%d\n", &this->cardQuantity);
+        for (int index = 0; index < this->cardQuantity; index++){
             fscanf(f, "%d/%d/%d,%[^,],%[^,],\n",
                 &this->cards[index].borrowDate.day,
                 &this->cards[index].borrowDate.month,
@@ -33,9 +35,7 @@ void ListCard::load(){
                 this->cards[index].isbn,
                 this->cards[index].id
             );
-            index++;
         }
-        this->cardQuantity = index;
         printf("Load list of cards from file successful!\n");
         fclose(f);
     }else{
@@ -109,10 +109,10 @@ void ListCard::returning(Stock &b, ListReader &r){
     }
 
     bool isDisappear;
-    printf("If the book is disappear, enter 1, otherwise 0: "); scanf("%d", isDisappear);
+    printf("If the book is disappear, enter 1, otherwise 0: "); scanf("%d", &isDisappear);
 
     if (isDisappear){
-        printf("Oh no, you have to pay %d!", parseInt(b.books[b.findID(isbn)].price) * 2);
+        printf("Oh no, you have to pay %d!\n", parseInt(b.books[b.findID(isbn)].price) * 2);
         //Delete the disappear book
         b.remove(b.findID(isbn));
     }else{
