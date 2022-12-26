@@ -19,12 +19,13 @@ struct Book{
     void operator = (const Book);
     void create();
     void display();
+    void edit();
 };
 
 struct Stock{
     int bookQuantity = 0;
     Book books[100];
-    const char* fileName = "Stock.json";
+    const char* fileName = "books.csv";
 
     void save();
     void load();

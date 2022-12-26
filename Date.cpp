@@ -9,10 +9,10 @@ void Date::create(){
     inputDay:
     try{
         s_input("Input day: ", temp, 2);
-        this->day = parseInt(temp, 2);
+        this->day = parseInt(temp);
     }catch(int error){
         if (error == 500){
-            printf("Day must be a number!\n");
+            printf("Day must be a number with format dd!\n");
             goto inputDay;
         }
     }
@@ -21,10 +21,10 @@ void Date::create(){
     inputMonth:
     try{
         s_input("Input month: ", temp, 2);
-        this->month = parseInt(temp, 2);
+        this->month = parseInt(temp);
     }catch(int error){
         if (error == 500){
-            printf("Month must be a number!\n");
+            printf("Month must be a number with format mm!\n");
             goto inputMonth;
         }
     }
@@ -33,14 +33,17 @@ void Date::create(){
     inputYear:
     try{
         s_input("Input year: ", temp, 4);
-        this->year = parseInt(temp, 4);
+        this->year = parseInt(temp);
     }catch(int error){
         if (error == 500){
-            printf("Year must be a number!\n");
+            printf("Year must be a number with format yyyy!\n");
             goto inputYear;
         }
     }
-
+    if (!this->isValid()){
+        printf("Invalid date! Try again!\n");
+        goto inputDay;
+    }
 }
 
 int Date::getAmountDaysOfMonth(int month, int year){

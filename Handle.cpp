@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <stdio.h>
 #include "Handle.h"
+#include <cstring>
 
 void s_input(const char* txt, char s[], int limit){
     //Print the command text
@@ -40,20 +41,15 @@ void s_input(const char* txt, char s[], int limit){
 }
 
 bool isEqual(char a[], char b[]){
-    for (int i = 0; i < 100; i++) 
-    {
-        if (a[i] != b[i]) return false;
-        if (a[i] == '\0') return true;
-    }
+    if (strcmp(a, b) == 0) return true;
     return false;
 }
 
 void swap(char a[], char b[]){
     char t[100];
-
-    substring(t, a);
-    substring(a, b);
-    substring(b, t);
+    memcpy(t, a, strlen(a));
+    memcpy(a, b, strlen(b));
+    memcpy(b, t, strlen(t));
 }
 
 void swap(char& a, char& b){
@@ -95,9 +91,9 @@ void idGeneration(int n, char s[]){
     }
 }
 
-int parseInt(char s[], int n){
+int parseInt(char s[]){
     int i = 0;
-    for (int digit = 0; digit < n; digit++) {
+    for (int digit = 0; digit < strlen(s); digit++) {
         if (s[digit] <= '9' && s[digit] >= '0') i = i * 10 + (s[digit] - '0');
         else throw 500;
     }
@@ -117,7 +113,7 @@ void toString(char s[], int i){
         swap(s[index--], s[index2++]);
     }
 }
-
+/*
 void substring(char s[], char res[]){
     for (int i = 0; i < 100; i++) 
     {
@@ -140,4 +136,4 @@ void substring(char s[], char res[], int start, int end, int start2){
     {
         res[index++] = s[i];
     }
-}
+}*/
