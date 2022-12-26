@@ -207,7 +207,7 @@ void readersPage(ListReader &r){
 	}
 }
 
-void cardsPage(Stock &s, ListReader &r, ListCard lc){
+void cardsPage(Stock &s, ListReader &r, ListCard &lc){
     //ev is code of key press event in ascii
     int ev = 0;
 
@@ -236,6 +236,91 @@ void cardsPage(Stock &s, ListReader &r, ListCard lc){
 	}
 }
 
+bool isIn(char k[17], char a[][17], int n){
+    for (int i = 0; i < n; i++){
+        if (isEqual(a[i], k)) return true;
+    }
+    return false;
+}
+
+void classifyCategory(Stock s){
+    char category[100][17];
+    int n = 0;
+
+    for (int i = 0; i < s.bookQuantity; i++){
+        if (!isIn(s.books[i].category, category, n)){
+            memcpy(category[n], s.books[i].category, strlen(s.books[i].category));
+            n++;
+        }
+    }
+
+    printf("Category:\n");
+    for (int i = 0; i < n; i++){
+        int total = 0;
+        for (int j = 0; j < s.bookQuantity; j++){
+            if (isEqual(category[i], s.books[j].category)){
+                total++;
+            }
+        }
+        printf("- %s: %d", category[i], total);
+    }
+}
+
+void statisticPage(Stock s, ListReader r, ListCard lc){
+    //ev is code of key press event in ascii
+    int ev = 0;
+
+    //27 is escape key
+    //Main loop repeats until user press ESC
+    while (ev != 27)
+	{
+		system("CLS");
+		printf("*****Statistic section******\n");
+		printf("* 1. Book's in library     *\n");
+		printf("* 2. Book's category       *\n");
+		printf("* 3. Reader's in library   *\n");
+		printf("* 4. Reader's sex          *\n");
+		printf("* 5. Borrowing book        *\n");
+		printf("* 6. Late returning reader *\n");
+		printf("* ESC. Exit                *\n");
+		printf("****************************");
+		ev = _getch();
+
+        int result = 0, result2 = 0;
+        system("CLS");
+		switch (ev){
+            case '1':
+                printf("There are %d books in library:\n", s.bookQuantity);
+                break;
+            case '2':
+                classifyCategory(s);
+                break;
+            case '3':
+                printf("There are %d readers in library:\n", r.readerQuantity);
+                break;
+            case '4':
+                for (int i = 0; i < r.readerQuantity; i++){
+                    if (isEqual(r.readers[i].sex, (char*)"male")) result++;
+                    else result2++;
+                }
+                printf("There are %d male readers and %d female readers\n", result, result2);
+                break;
+            case '5':
+                printf("There are %d borrowing books:\n", lc.cardQuantity);
+                break;
+            case '6':
+                for (int i = 0; i < r.readerQuantity; i++){
+                    if (r.readers[i].isLateReturning) result++;
+                }
+                printf("There are %d late returning readers:\n", result);
+                break;
+            default:
+                break;
+		}
+        system("PAUSE");
+	}
+}
+
 //Main function is responsible for print main menu and navigate to smaller section
 int main(){
     //check if user have the account to use
@@ -246,10 +331,12 @@ int main(){
 
     Stock stock;
     ListReader readers;
+    ListCard cards;
 
     //Load old data
     stock.load();
     readers.load();
+    cards.load();
 
     //27 is escape key
     //Main loop repeats until user press ESC
@@ -282,10 +369,10 @@ int main(){
                 readersPage(readers);
                 break;
             case '3':
-
+                cardsPage(stock, readers, cards);
                 break;
             case '4':
-                
+                statisticPage(stock, readers, cards);
                 break;
             default:
                 break;
