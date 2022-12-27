@@ -1,6 +1,11 @@
 #ifndef HANDLE_H
 #define HANDLE_H
 
+//reference: https://stackoverflow.com/questions/21238806/how-to-set-output-console-width-in-visual-studio
+//description: set size of the console with w (width), h (height)
+//parameter: w and h, which must be larger than 0, are given in int data type
+void setSizeConsole(int w, int h);
+
 //description: read the key press of user and store it to s with limit in number of character
 //parameter: txt in char* data type is the tool tip that help user know what information they should give
 //parameter: s in char[] data type is the storage in which data from user is stored

@@ -334,6 +334,7 @@ int main(){
     //check if user have the account to use
     if (!SignedIn()) return 0;
 
+    setSizeConsole(1300, 700);
     //ev is code of key press event in ascii
     int ev = 0;
 

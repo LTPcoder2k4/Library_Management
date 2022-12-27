@@ -4,6 +4,14 @@
 #include "Handle.h"
 #include <cstring>
 
+void setSizeConsole(int w, int h)
+{
+    HWND console = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(console, &r);
+    MoveWindow(console, r.left, r.top, w, h, TRUE);
+}
+
 void s_input(const char* txt, char s[], int limit){
     //Print the command text
 	printf(txt);
