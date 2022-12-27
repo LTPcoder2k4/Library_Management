@@ -136,6 +136,8 @@ void ListReader::save(){
 
             fprintf(f, "%s,", this->readers[index].dateExpired.toString());
 
+            fprintf(f, "%d,", this->readers[index].isLateReturning);
+
             fprintf(f, "\n");
         }
     }else{
@@ -150,12 +152,13 @@ void ListReader::load(){
     if (f != NULL){
         fscanf(f, "%d\n", &this->readerQuantity);
         for (int index = 0; index < this->readerQuantity; index++){
-            fscanf(f, "%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],%[^,],%d/%d/%d,%d/%d/%d,\n",
+            fscanf(f, "%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],%[^,],%d/%d/%d,%d/%d/%d,%d,\n",
                 this->readers[index].id, this->readers[index].name, this->readers[index].identityCard, 
                 &this->readers[index].birthday.day, &this->readers[index].birthday.month, &this->readers[index].birthday.year,
                 this->readers[index].sex, this->readers[index].email, this->readers[index].address, 
                 &this->readers[index].dateCreated.day, &this->readers[index].dateCreated.month, &this->readers[index].dateCreated.year,
-                &this->readers[index].dateExpired.day, &this->readers[index].dateExpired.month, &this->readers[index].dateExpired.year
+                &this->readers[index].dateExpired.day, &this->readers[index].dateExpired.month, &this->readers[index].dateExpired.year,
+                &this->readers[index].isLateReturning
             );
         }
         printf("Load list of readers from file successful!\n");
