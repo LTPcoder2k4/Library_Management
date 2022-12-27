@@ -64,7 +64,7 @@ void ListCard::add(Stock &b, ListReader r){
     s_input("Reader's ID: ", id, 6);
 
     if (r.findID(id) == -1){
-        printf("There is no book with ID: %s! Try again!\n", id);
+        printf("There is no reader with ID: %s! Try again!\n", id);
         goto inputReader;
     }
 
