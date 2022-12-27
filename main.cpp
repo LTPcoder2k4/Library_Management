@@ -76,6 +76,7 @@ void booksPage(Stock &s){
                 index = s.findID(isbn);
                 if (index == -1){
                     printf("There is no book with the ISBN: %s!\n", isbn);
+                    system("PAUSE");
                 }else{
                     s.books[index].edit();
                     s.save();
@@ -88,6 +89,7 @@ void booksPage(Stock &s){
                 index = s.findID(isbn);
                 if (index == -1){
                     printf("There is no book with the ISBN: %s!\n", isbn);
+                    system("PAUSE");
                 }else{
                     s.remove(index);
                     printf("Book deleted!\n");
@@ -101,6 +103,7 @@ void booksPage(Stock &s){
                 index = s.findID(isbn);
                 if (index == -1){
                     printf("There is no book with the ISBN: %s!\n", isbn);
+                    system("PAUSE");
                 }else{
                     s.books[index].display();
                 }
@@ -173,6 +176,7 @@ void readersPage(ListReader &r){
                 index = r.findID(id);
                 if (index == -1){
                     printf("There is no reader with the DI: %s!\n", id);
+                    system("PAUSE");
                 }else{
                     r.remove(index);
                     printf("Reader deleted!\n");
@@ -186,6 +190,7 @@ void readersPage(ListReader &r){
                 index = r.findID(id);
                 if (index == -1){
                     printf("There is no reader with the ID: %s!\n", id);
+                    system("PAUSE");
                 }else{
                     r.readers[index].display();
                 }
@@ -198,6 +203,7 @@ void readersPage(ListReader &r){
                 index = r.findName(name);
                 if (index == -1){
                     printf("There is no reader with the name: %s!\n", name);
+                    system("PAUSE");
                 }else{
                     r.readers[index].display();
                 }
