@@ -53,25 +53,6 @@ bool isEqual(char a[], char b[]){
     return false;
 }
 
-void swap(char a[], char b[]){
-    char t[100];
-    memcpy(t, a, strlen(a));
-    memcpy(a, b, strlen(b));
-    memcpy(b, t, strlen(t));
-}
-
-void swap(char& a, char& b){
-    char c = a;
-    a = b;
-    b = c;
-}
-
-void swap(bool& a, bool& b){
-    bool c = a;
-    a = b;
-    b = c;
-}
-
 void idGeneration(int n, char s[]){
     if (n < 10) {
         s[2] = '0';
@@ -107,41 +88,3 @@ int parseInt(char s[]){
     }
     return i;
 }
-
-void toString(char s[], int i){
-    int index = 0;
-    s[index++] = (i % 10) + '0';
-    while (i /= 10){
-        s[index++] = (i % 10) + '0';
-    }
-
-    index--;
-    int index2 = 0;
-    while (index > index2){
-        swap(s[index--], s[index2++]);
-    }
-}
-/*
-void substring(char s[], char res[]){
-    for (int i = 0; i < 100; i++) 
-    {
-        res[i] = s[i];
-        if (s[i] == '\0') return;
-    }
-}
-
-void substring(char s[], char res[], int start, int end){
-    int index = 0;
-    for (int i = start; i < end; i++) 
-    {
-        res[index++] = s[i];
-    }
-}
-
-void substring(char s[], char res[], int start, int end, int start2){
-    int index = start2;
-    for (int i = start; i < end; i++)
-    {
-        res[index++] = s[i];
-    }
-}*/

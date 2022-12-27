@@ -9,6 +9,9 @@
 #include "Handle.h"
 #include "Cards.h"
 
+//description: get root username and password from local file
+//parameter: username in char[] type is root username
+//parameter: password in char[] type is root password
 void getAuthorize(char username[], char password[]){
     FILE* f = fopen("user.csv", "rb");
     if (f != NULL){
@@ -17,6 +20,7 @@ void getAuthorize(char username[], char password[]){
     fclose(f);
 }
 
+//description: Return true if user enter the right username and password
 bool SignedIn(){
     system("CLS");
 
@@ -39,6 +43,8 @@ bool SignedIn(){
     return false;
 }
 
+//description: mainloop for book section and navigate to action
+//parameter: s in Stock type is a list of books
 void booksPage(Stock &s){
     //ev is code of key press event in ascii
     int ev = 0;
@@ -127,6 +133,8 @@ void booksPage(Stock &s){
 	}
 }
 
+//description: mainloop for reader section and navigate to action
+//parameter: r in ListReader type is a list of readers
 void readersPage(ListReader &r){
     //ev is code of key press event in ascii
     int ev = 0;
@@ -215,6 +223,10 @@ void readersPage(ListReader &r){
 	}
 }
 
+//description: mainloop for card section and navigate to action
+//parameter: s in Stock type is a list of books
+//parameter: r in ListReader type is a list of readers
+//parameter: lc in ListCard type is a list of cards 
 void cardsPage(Stock &s, ListReader &r, ListCard &lc){
     //ev is code of key press event in ascii
     int ev = 0;
@@ -244,6 +256,10 @@ void cardsPage(Stock &s, ListReader &r, ListCard &lc){
 	}
 }
 
+//description: check if k is already in a
+//parameter: k in char[17] type is a string needed to be checked
+//parameter: a in char[][17] type is an array of string used for checking
+//parameter: n in int type is the number of element in a
 bool isIn(char k[17], char a[][17], int n){
     for (int i = 0; i < n; i++){
         if (isEqual(a[i], k)) return true;
@@ -251,6 +267,8 @@ bool isIn(char k[17], char a[][17], int n){
     return false;
 }
 
+//description: classify book according to its category
+//parameter: s in Stock type is a list of books
 void classifyCategory(Stock s){
     char category[100][17];
     int n = 0;
@@ -274,6 +292,10 @@ void classifyCategory(Stock s){
     }
 }
 
+//description: mainloop for statistic section and navigate to action
+//parameter: s in Stock type is a list of books
+//parameter: r in ListReader type is a list of readers
+//parameter: lc in ListCard type is a list of cards 
 void statisticPage(Stock s, ListReader r, ListCard lc){
     //ev is code of key press event in ascii
     int ev = 0;

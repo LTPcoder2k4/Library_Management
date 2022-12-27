@@ -98,11 +98,11 @@ void Stock::load(){
     if (f != NULL){
         fscanf(f, "%d\n", &this->bookQuantity);
         for (int i = 0; i < this->bookQuantity; i++){
-            fscanf(f, "%[^,],%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],\n",
+            fscanf(f, "%[^,],%[^,],%[^,],%[^,],%d/%d/%d,%[^,],%[^,],%d,\n",
                 this->books[i].isbn, this->books[i].name, this->books[i].author, 
                 this->books[i].publisher, &this->books[i].publishDate.day, 
                 &this->books[i].publishDate.month, &this->books[i].publishDate.year, 
-                this->books[i].category, this->books[i].price
+                this->books[i].category, this->books[i].price, &this->books[i].isBorrow
             );
         }
         printf("Load stock from file successful!\n");
@@ -118,10 +118,10 @@ void Stock::save(){
     if (f != NULL){
         fprintf(f, "%d\n", this->bookQuantity);
         for (int i = 0; i < this->bookQuantity; i++){
-            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,\n", 
+            fprintf(f, "%s,%s,%s,%s,%s,%s,%s,%d,\n", 
                 this->books[i].isbn, this->books[i].name, this->books[i].author, 
                 this->books[i].publisher, this->books[i].publishDate.toString(), 
-                this->books[i].category, this->books[i].price
+                this->books[i].category, this->books[i].price, this->books[i].isBorrow
             );
         }
         fclose(f);
