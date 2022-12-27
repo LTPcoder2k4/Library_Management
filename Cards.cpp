@@ -121,8 +121,8 @@ void ListCard::returning(Stock &b, ListReader &r){
         this->cards[this->findCard(isbn, id)].borrowDate.aWeekAfter();
         //Calculate the time different
         int day = this->cards[this->findCard(isbn, id)].borrowDate - returningDate;
-        if (day){
-            printf("You have to pay %d for penalty!\n", day * 5000);
+        if (day < 0){
+            printf("You have to pay %d for penalty!\n", day * 5000 * -1);
             //Mark user as late returning
             r.readers[r.findID(id)].isLateReturning = true;
         }else{
