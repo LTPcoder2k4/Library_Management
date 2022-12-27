@@ -251,7 +251,7 @@ void classifyCategory(Stock s){
 
     for (int i = 0; i < s.bookQuantity; i++){
         if (!isIn(s.books[i].category, category, n)){
-            memcpy(category[n], s.books[i].category, strlen(s.books[i].category));
+            memcpy(category[n], s.books[i].category, strlen(s.books[i].category) + 1);
             n++;
         }
     }
